@@ -1,9 +1,10 @@
 import Foundation
+import CommonCrypto
 
-enum Algorithm {
-    case sha1
-    case sha256
-    case sha512
+enum Algorithm: Int32 {
+    case sha1 = 0
+    case sha256 = 1
+    case sha512 = 2
     
     var name: String {
         switch self {

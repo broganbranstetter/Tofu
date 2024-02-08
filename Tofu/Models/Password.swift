@@ -1,6 +1,22 @@
 import Foundation
+import CommonCrypto
 
-class Password {
+class Password: Equatable, Hashable {
+
+    static func == (lhs: Password, rhs: Password) -> Bool {
+        return lhs.algorithm == rhs.algorithm && lhs.secret == rhs.secret && lhs.digits == rhs.digits &&
+        lhs.period == rhs.period && lhs.counter == rhs.counter && lhs.timeBased == rhs.timeBased
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(algorithm)
+        hasher.combine(counter)
+        hasher.combine(digits)
+        hasher.combine(secret)
+        hasher.combine(period)
+        hasher.combine(timeBased)
+    }
+
     var algorithm: Algorithm = .sha1
     var counter = 0
 
@@ -43,7 +59,9 @@ class Password {
         defer { digest.deallocate() }
         secret.withUnsafeBytes { secretBytes in CCHmac(algorithm.hmacAlgorithm, secretBytes.baseAddress, secret.count, &input, MemoryLayout.size(ofValue: input), digest) }
         let offset = digest[algorithm.digestLength - 1] & 0x0f
-        let number = (digest + Int(offset)).withMemoryRebound(to: UInt32.self, capacity: 1) { UInt32(bigEndian: $0.pointee) } & 0x7fffffff
+        let digestData = Data(bytes: digest, count: algorithm.digestLength)
+        let bigEndianNumber = try! digestData.alignmentSafeLoad(fromByteOffset: Int(offset), as: UInt32.self)
+        let number = UInt32(bigEndian: bigEndianNumber) & 0x7fffffff
         return String(format: "%0\(digits)d", number % UInt32(pow(10, Float(digits))))
     }
     

@@ -98,4 +98,21 @@ extension Data {
         guard let decodedBytes = decoded(bytes: encodedBytes) else { return nil }
         self.init(decodedBytes)
     }
+
+    /// Read a given type from a Data's buffer.
+    ///
+    /// Very much like UnsafeRawBufferPointer's load(fromByteOffset:as:), but doesn't barf if the value
+    /// isn't at an aligned position.
+    ///
+    /// - Parameters:
+    ///   - offset: The offset to load the value from.
+    ///   - type: The type of the value.
+    /// - Returns: The value loaded from the data.
+    func alignmentSafeLoad<T>(fromByteOffset offset: Int = 0, as type: T.Type) throws -> T {
+        guard count >= (offset + MemoryLayout<T>.size) else { throw NSError(domain: "com.calleerlandsson.Tofu", code: -1) }
+        let chunk = subdata(in: offset..<(offset + MemoryLayout<T>.size))
+        return chunk.withUnsafeBytes({ (bytePointer: UnsafeRawBufferPointer) -> T in
+            return bytePointer.load(as: T.self)
+        })
+    }
 }

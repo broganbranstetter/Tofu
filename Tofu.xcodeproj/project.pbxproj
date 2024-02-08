@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,6 +32,7 @@
 		25A81D571C5DFC5C008E51B9 /* ScanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A81D561C5DFC5C008E51B9 /* ScanningViewController.swift */; };
 		25A81D5B1C5F656A008E51B9 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A81D5A1C5F656A008E51B9 /* CircularProgressView.swift */; };
 		25CF8B6C1C57946B00665FFE /* AlgorithmsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF8B6B1C57946B00665FFE /* AlgorithmsViewController.swift */; };
+		50C456A12B2325A0009C83C6 /* ExternalDataInterop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C456A02B2325A0009C83C6 /* ExternalDataInterop.swift */; };
 		EB61B64D25D2BE15000B1735 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB61B64C25D2BE15000B1735 /* UIViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +56,6 @@
 /* Begin PBXFileReference section */
 		2506E6E21C6F83AE00E694D3 /* Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
 		2506E6E41C6F9A5A00E694D3 /* Algorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
-		2508F1151C526E3A00164467 /* Tofu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tofu-Bridging-Header.h"; sourceTree = "<group>"; };
 		250CB0101C81BF0B00D48AC9 /* AccountsTableViewUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTableViewUpdater.swift; sourceTree = "<group>"; };
 		251A79861C7A68BC00E2747E /* AccountSearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSearchResultsViewController.swift; sourceTree = "<group>"; };
 		259FAC4F1C765BB00013B4F7 /* AccountCreationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCreationDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +85,8 @@
 		25A81D561C5DFC5C008E51B9 /* ScanningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanningViewController.swift; sourceTree = "<group>"; };
 		25A81D5A1C5F656A008E51B9 /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		25CF8B6B1C57946B00665FFE /* AlgorithmsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlgorithmsViewController.swift; sourceTree = "<group>"; };
+		50C456992B232054009C83C6 /* Tofu.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Tofu.xcconfig; path = Tofu/Tofu.xcconfig; sourceTree = "<group>"; };
+		50C456A02B2325A0009C83C6 /* ExternalDataInterop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDataInterop.swift; sourceTree = "<group>"; };
 		EB61B64C25D2BE15000B1735 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,28 +115,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		259FAC551C7665620013B4F7 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				259FAC4F1C765BB00013B4F7 /* AccountCreationDelegate.swift */,
-				259FAC511C765F4B0013B4F7 /* AccountUpdateDelegate.swift */,
-				259FAC531C765FEB0013B4F7 /* AlgorithmSelectionDelegate.swift */,
-			);
-			name = Protocols;
-			sourceTree = "<group>";
-		};
-		259FAC561C7665710013B4F7 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				25A81D441C53923D008E51B9 /* Data.swift */,
-				EB61B64C25D2BE15000B1735 /* UIViewController.swift */,
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
 		25A81D011C500E9B008E51B9 = {
 			isa = PBXGroup;
 			children = (
+				50C456992B232054009C83C6 /* Tofu.xcconfig */,
 				25A81D0C1C500E9C008E51B9 /* Tofu */,
 				25A81D211C500E9C008E51B9 /* TofuTests */,
 				25A81D2C1C500E9C008E51B9 /* TofuUITests */,
@@ -155,13 +139,12 @@
 		25A81D0C1C500E9C008E51B9 /* Tofu */ = {
 			isa = PBXGroup;
 			children = (
-				259FAC561C7665710013B4F7 /* Extensions */,
-				259FAC551C7665620013B4F7 /* Protocols */,
-				25A81D5E1C5F6E4D008E51B9 /* Models */,
-				25A81D5C1C5F6E1F008E51B9 /* Views */,
-				25A81D5D1C5F6E36008E51B9 /* Controllers */,
+				50C4569B2B2324E2009C83C6 /* Extensions */,
+				50C4569C2B2324F3009C83C6 /* Protocols */,
+				50C4569D2B232507009C83C6 /* Models */,
+				50C4569E2B23251B009C83C6 /* Views */,
+				50C4569F2B23252D009C83C6 /* Controllers */,
 				25A81D0D1C500E9C008E51B9 /* AppDelegate.swift */,
-				2508F1151C526E3A00164467 /* Tofu-Bridging-Header.h */,
 				25A81D111C500E9C008E51B9 /* Main.storyboard */,
 				25A81D161C500E9C008E51B9 /* LaunchScreen.storyboard */,
 				25A81D141C500E9C008E51B9 /* Assets.xcassets */,
@@ -190,16 +173,47 @@
 			path = TofuUITests;
 			sourceTree = "<group>";
 		};
-		25A81D5C1C5F6E1F008E51B9 /* Views */ = {
+		50C4569B2B2324E2009C83C6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				25A81D441C53923D008E51B9 /* Data.swift */,
+				EB61B64C25D2BE15000B1735 /* UIViewController.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		50C4569C2B2324F3009C83C6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				259FAC4F1C765BB00013B4F7 /* AccountCreationDelegate.swift */,
+				259FAC511C765F4B0013B4F7 /* AccountUpdateDelegate.swift */,
+				259FAC531C765FEB0013B4F7 /* AlgorithmSelectionDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		50C4569D2B232507009C83C6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				25A81D421C5176F0008E51B9 /* Account.swift */,
+				25A81D3B1C502755008E51B9 /* Keychain.swift */,
+				2506E6E21C6F83AE00E694D3 /* Password.swift */,
+				2506E6E41C6F9A5A00E694D3 /* Algorithm.swift */,
+				50C456A02B2325A0009C83C6 /* ExternalDataInterop.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		50C4569E2B23251B009C83C6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				25A81D501C551F17008E51B9 /* AccountCell.swift */,
 				25A81D5A1C5F656A008E51B9 /* CircularProgressView.swift */,
 			);
-			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		25A81D5D1C5F6E36008E51B9 /* Controllers */ = {
+		50C4569F2B23252D009C83C6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				25A81D0F1C500E9C008E51B9 /* AccountsViewController.swift */,
@@ -210,18 +224,7 @@
 				251A79861C7A68BC00E2747E /* AccountSearchResultsViewController.swift */,
 				250CB0101C81BF0B00D48AC9 /* AccountsTableViewUpdater.swift */,
 			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
-		25A81D5E1C5F6E4D008E51B9 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				25A81D421C5176F0008E51B9 /* Account.swift */,
-				25A81D3B1C502755008E51B9 /* Keychain.swift */,
-				2506E6E21C6F83AE00E694D3 /* Password.swift */,
-				2506E6E41C6F9A5A00E694D3 /* Algorithm.swift */,
-			);
-			name = Models;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +234,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 25A81D321C500E9C008E51B9 /* Build configuration list for PBXNativeTarget "Tofu" */;
 			buildPhases = (
+				50C4569A2B2321D0009C83C6 /* Generate Version Headers */,
 				25A81D061C500E9C008E51B9 /* Sources */,
 				25A81D071C500E9C008E51B9 /* Frameworks */,
 				25A81D081C500E9C008E51B9 /* Resources */,
@@ -286,9 +290,10 @@
 		25A81D021C500E9B008E51B9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 1220;
-				ORGANIZATIONNAME = "Calle Erlandsson";
+				LastUpgradeCheck = 1510;
+				ORGANIZATIONNAME = "Daniel Kennett";
 				TargetAttributes = {
 					25A81D091C500E9C008E51B9 = {
 						CreatedOnToolsVersion = 7.2;
@@ -354,6 +359,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		50C4569A2B2321D0009C83C6 /* Generate Version Headers */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Version Headers";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/include/TofuVersions.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "GIT_RELEASE_VERSION=$(git describe --tags --always --dirty --long)\nGIT_RELEASE_VERSION=${GIT_RELEASE_VERSION/-0-/-}\n\nCOMMITS=$(git rev-list HEAD | wc -l)\nCOMMITS=$(($COMMITS))\n\nFINAL_HEADER_LOCATION=\"${BUILT_PRODUCTS_DIR}/include/TofuVersions.h\"\nTEMP_HEADER_LOCATION=\"${FINAL_HEADER_LOCATION}~\"\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/include\"\n\necho \"#define TOFU_VERBOSE_VERSION ${GIT_RELEASE_VERSION#*v}\" > \"${TEMP_HEADER_LOCATION}\"\necho \"#define TOFU_BUNDLE_VERSION ${COMMITS}\" >> \"${TEMP_HEADER_LOCATION}\"\necho \"#define TOFU_MARKETING_VERSION ${MARKETING_VERSION}\" >> \"${TEMP_HEADER_LOCATION}\"\n\ncmp --silent \"${FINAL_HEADER_LOCATION}\" \"${TEMP_HEADER_LOCATION}\"\n\nif [ $? -eq 0 ]\nthen\n    echo \"Versions unchanged - skipping.\"\n    rm \"${TEMP_HEADER_LOCATION}\"\nelse\n    rm -f \"${FINAL_HEADER_LOCATION}\"\n    mv \"${TEMP_HEADER_LOCATION}\" \"${FINAL_HEADER_LOCATION}\"\nfi\n\necho \"${FINAL_HEADER_LOCATION}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		25A81D061C500E9C008E51B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -378,6 +406,7 @@
 				25A81D551C5BC31B008E51B9 /* AccountUpdateViewController.swift in Sources */,
 				25A81D3E1C51758C008E51B9 /* AccountCreationViewController.swift in Sources */,
 				25A81D431C5176F0008E51B9 /* Account.swift in Sources */,
+				50C456A12B2325A0009C83C6 /* ExternalDataInterop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +467,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -495,6 +525,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -536,7 +567,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -544,19 +576,23 @@
 		};
 		25A81D331C500E9C008E51B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50C456992B232054009C83C6 /* Tofu.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = QG8TM5XJ84;
 				INFOPLIST_FILE = Tofu/Info.plist;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
+				INFOPLIST_PREFIX_HEADER = "${BUILT_PRODUCTS_DIR}/include/TofuVersions.h";
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.11;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.calleerlandsson.Tofu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Tofu/Tofu-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -565,19 +601,23 @@
 		};
 		25A81D341C500E9C008E51B9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50C456992B232054009C83C6 /* Tofu.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = QG8TM5XJ84;
 				INFOPLIST_FILE = Tofu/Info.plist;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
+				INFOPLIST_PREFIX_HEADER = "${BUILT_PRODUCTS_DIR}/include/TofuVersions.h";
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.11;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.calleerlandsson.Tofu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Tofu/Tofu-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -588,7 +628,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = TofuTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.calleerlandsson.TofuTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -601,7 +645,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = TofuTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.calleerlandsson.TofuTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -613,7 +661,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = TofuUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.calleerlandsson.TofuUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -626,7 +678,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = TofuUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.calleerlandsson.TofuUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

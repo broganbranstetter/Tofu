@@ -1,46 +1,39 @@
 import Foundation
 
-private func archivedDataWithAccount(_ account: Account) -> Data {
-    let coder = NSKeyedArchiver(requiringSecureCoding: true)
+private enum KeychainEncodingVersion: UInt8 {
+    case version1 = 1
+    case version2 = 2
+}
 
-    coder.encode(account.password.timeBased, forKey: "timeBased")
-    let algorithmIdentifier: Int32
-    switch account.password.algorithm {
-    case .sha1: algorithmIdentifier = 0
-    case .sha256: algorithmIdentifier = 1
-    case .sha512: algorithmIdentifier = 2
-    }
-    coder.encode(algorithmIdentifier, forKey: "algorithm")
-    coder.encode(Int32(account.password.digits), forKey: "digits")
-    coder.encode(account.password.secret, forKey: "secret")
-    coder.encode(Int32(account.password.counter), forKey: "counter")
-    coder.encode(Int32(account.password.period), forKey: "period")
-    coder.encode(account.name, forKey: "name")
-    coder.encode(account.issuer, forKey: "issuer")
-
-    var version: UInt8 = 1
-    let size = MemoryLayout.size(ofValue: version)
-    let versionedData = NSMutableData(bytes: &version, length: size)
-    versionedData.append(coder.encodedData)
-
-    return versionedData as Data
+private func archivedDataForKeychainWithAccount(_ account: Account) throws -> Data {
+    let data = try NSKeyedArchiver.archivedData(withRootObject: account, requiringSecureCoding: true)
+    let version: UInt8 = KeychainEncodingVersion.version2.rawValue
+    var versionedData = Data([version])
+    versionedData.append(data)
+    return versionedData
 }
 
 private func unarchiveAccountWithData(_ data: Data) -> Account? {
-    let version = data.first
-    guard version == 1,
-          let coder = try? NSKeyedUnarchiver(forReadingFrom: data.subdata(in: 1..<data.count)),
-          let secret = coder.decodeObject(forKey: "secret") as? Data else { return nil }
+    guard !data.isEmpty else { return nil }
+    guard let version = KeychainEncodingVersion(rawValue: data.first!) else { return nil }
+    let encodedData = data.subdata(in: 1..<data.count)
+
+    switch version {
+    case .version1: return unarchiveV1AccountWithData(encodedData)
+    case .version2: return try? NSKeyedUnarchiver.unarchivedObject(ofClass: Account.self, from: encodedData)
+    }
+}
+
+private func unarchiveV1AccountWithData(_ data: Data) -> Account? {
+    // This is here to decode accounts saved with Tofu >= 1.11. Since then, we've moved to a
+    // slightly different encoding method (Accounts now conform to NSSecureCoding directly).
+    guard let coder = try? NSKeyedUnarchiver(forReadingFrom: data),
+          let secret = coder.decodeObject(of: NSData.self, forKey: "secret") as? Data,
+          coder.containsValue(forKey: "algorithm"),
+          let algorithm = Algorithm(rawValue: coder.decodeInt32(forKey: "algorithm")) else { return nil }
 
     let password = Password()
-
-    switch coder.decodeInt32(forKey: "algorithm") {
-    case 0: password.algorithm = .sha1
-    case 1: password.algorithm = .sha256
-    case 2: password.algorithm = .sha512
-    default: return nil
-    }
-
+    password.algorithm = algorithm
     password.secret = secret
     password.digits = Int(coder.decodeInt32(forKey: "digits"))
     password.timeBased = coder.decodeBool(forKey: "timeBased")
@@ -48,8 +41,8 @@ private func unarchiveAccountWithData(_ data: Data) -> Account? {
     password.period = Int(coder.decodeInt32(forKey: "period"))
 
     let account = Account()
-    account.name = coder.decodeObject(forKey: "name") as? String
-    account.issuer = coder.decodeObject(forKey: "issuer") as? String
+    account.name = coder.decodeObject(of: NSString.self, forKey: "name") as? String
+    account.issuer = coder.decodeObject(of: NSString.self, forKey: "issuer") as? String
     account.password = password
     return account
 }
@@ -83,11 +76,12 @@ class Keychain {
     }
 
     func insertAccount(_ account: Account) -> Bool {
+        guard let accountData = try? archivedDataForKeychainWithAccount(account) else { return false }
         let query: [NSString: AnyObject] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: ProcessInfo().globallyUniqueString as AnyObject,
             kSecAttrDescription: account.description as AnyObject,
-            kSecValueData: archivedDataWithAccount(account) as AnyObject,
+            kSecValueData: accountData as AnyObject,
             kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
             kSecReturnPersistentRef: true as AnyObject,
         ]
@@ -98,13 +92,14 @@ class Keychain {
     }
 
     func updateAccount(_ account: Account) -> Bool {
+        guard let accountData = try? archivedDataForKeychainWithAccount(account) else { return false }
         let query: [NSString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecValuePersistentRef: account.persistentRef!
         ]
         let attributes: [NSString: AnyObject] = [
             kSecAttrDescription: account.description as AnyObject,
-            kSecValueData: archivedDataWithAccount(account) as AnyObject,
+            kSecValueData: accountData as AnyObject,
             kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
         ]
         return SecItemUpdate(query as CFDictionary, attributes as CFDictionary) == errSecSuccess
